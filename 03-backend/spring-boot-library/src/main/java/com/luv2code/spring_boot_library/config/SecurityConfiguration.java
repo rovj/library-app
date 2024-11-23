@@ -23,8 +23,10 @@ public class SecurityConfiguration {
         http.csrf(csrf -> csrf.disable());
         http.authorizeHttpRequests(configurer -> configurer
                                   .requestMatchers("/api/books/secure/**",
-                                                             "/api/reviews/secure/**")
-                                  .authenticated())
+                                                   "/api/reviews/secure/**",
+                                                   "/api/messages/secure/**")
+                                  .authenticated()
+                                  .anyRequest().permitAll() )
                                   .oauth2ResourceServer(oauth2 -> oauth2.jwt());
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
         http.setSharedObject(ContentNegotiationStrategy.class,new HeaderContentNegotiationStrategy());

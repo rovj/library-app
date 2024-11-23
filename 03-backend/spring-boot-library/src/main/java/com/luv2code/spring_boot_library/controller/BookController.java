@@ -19,21 +19,24 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/secure/currentLoans")
+    @GetMapping("/secure/currentloans")
     public List<ShellCurrentLoansResponse> getCurrentLoans(@RequestHeader(value="Authorization") String token) throws Exception{
+        System.out.println("Request received for /secure/currentloans");
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return this.bookService.currentLoans(userEmail);
     }
 
-    @GetMapping("/secure/isCheckout/byuser")
+    @GetMapping("/secure/ischeckedout/byuser/")
     public Boolean checkoutBookByUser(@RequestHeader(value="Authorization") String token,@RequestParam Long bookId){
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return bookService.isCheckoutByUser(userEmail,bookId);
     }
 
-    @GetMapping("/secure/currentLoans/count")
+    @GetMapping("/secure/currentloans/count")
     public int currentLoanCount(@RequestHeader(value="Authorization") String token){
+        System.out.println("Request received for /secure/currentLoans/count");
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
+        System.out.println("User Email: " + userEmail);
         return bookService.getLoanCount(userEmail);
     }
 
@@ -42,5 +45,19 @@ public class BookController {
                              @RequestParam Long bookId) throws Exception{
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return bookService.checkoutBook(userEmail,bookId);
+    }
+
+    @PutMapping("/secure/return")
+    public void returnBook(@RequestHeader(value="Authorization") String token,
+                           @RequestParam Long bookId) throws Exception{
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
+        bookService.returnBook(userEmail,bookId);
+    }
+
+    @PutMapping("/secure/renew/loan")
+    public void renewLoan(@RequestHeader(value="Authorization") String token,
+                           @RequestParam Long bookId) throws Exception{
+        String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
+        bookService.renewLoan(userEmail,bookId);
     }
 }

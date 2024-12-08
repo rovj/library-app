@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("https://localhost:3000")
 @RestController
 @RequestMapping("/api/books")
 public class BookController {
@@ -26,7 +26,7 @@ public class BookController {
         return this.bookService.currentLoans(userEmail);
     }
 
-    @GetMapping("/secure/ischeckedout/byuser/")
+    @GetMapping("/secure/ischeckedout/byuser")
     public Boolean checkoutBookByUser(@RequestHeader(value="Authorization") String token,@RequestParam Long bookId){
         String userEmail = ExtractJWT.payloadJWTExtraction(token,"\"sub\"");
         return bookService.isCheckoutByUser(userEmail,bookId);

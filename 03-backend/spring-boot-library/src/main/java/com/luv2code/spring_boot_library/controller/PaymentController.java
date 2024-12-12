@@ -1,5 +1,6 @@
 package com.luv2code.spring_boot_library.controller;
 
+import com.luv2code.spring_boot_library.entity.Payment;
 import com.luv2code.spring_boot_library.requestmodels.PaymentInfoRequest;
 import com.luv2code.spring_boot_library.service.PaymentService;
 import com.luv2code.spring_boot_library.utils.ExtractJWT;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/payment/secure")
-@CrossOrigin("https://localhost:3000")
+@CrossOrigin("http://localhost:3000")
 public class PaymentController {
     private PaymentService paymentService;
 
@@ -34,5 +35,10 @@ public class PaymentController {
             throw new Exception("User email is missing!");
         }
         return this.paymentService.stripePayment(userEmail);
+    }
+
+    @GetMapping("/findPaymentByUserEmail")
+    public ResponseEntity<Payment> getOrCreatePayment(@RequestParam String userEmail){
+        return this.paymentService.createOrGetPayment(userEmail);
     }
 }

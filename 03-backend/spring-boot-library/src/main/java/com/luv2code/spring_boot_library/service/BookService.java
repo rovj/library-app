@@ -47,7 +47,7 @@ public class BookService {
         boolean booksNeedToBEReturned = false;
 
         for(Checkout checkoutVal : checkoutList){
-            Date d1 = sdf.parse(checkout.getReturnDate());
+            Date d1 = sdf.parse(checkoutVal.getReturnDate());
             Date d2 = sdf.parse(LocalDate.now().toString());
 
             TimeUnit timeUnit = TimeUnit.DAYS;

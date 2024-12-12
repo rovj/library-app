@@ -50,4 +50,16 @@ public class PaymentService {
         this.paymentRepository.save(payment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    public ResponseEntity<Payment> createOrGetPayment(String userEmail){
+        Payment payment = this.paymentRepository.findByUserEmail(userEmail);
+        if(payment == null) {
+            Payment userPayment = new Payment();
+            userPayment.setAmount(00.00);
+            userPayment.setUserEmail(userEmail);
+            this.paymentRepository.save(userPayment);
+            return new ResponseEntity<>(userPayment, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(payment, HttpStatus.OK);
+    }
 }

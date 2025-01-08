@@ -158,7 +158,7 @@ public class BookService {
         Date d2 = sdfFormat.parse(LocalDate.now().toString());
 
         if(d1.compareTo(d2) >= 0){
-            validateCheckout.setReturnDate(LocalDate.now().plusDays(7).toString());
+            validateCheckout.setReturnDate(LocalDate.parse(validateCheckout.getReturnDate()).plusDays(7).toString());
             this.checkoutRepository.save(validateCheckout);
         }
     }

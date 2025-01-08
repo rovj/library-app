@@ -97,7 +97,7 @@ export const SearchBooksPage = () => {
             value.toLowerCase() === 'devops'
         ) {
             setCategorySelection(value);
-            setSearchUrl(`/search/findByCategory?category=${value}&page=0&size=${booksPerPage}`)
+            setSearchUrl(`/search/findByCategoryContaining?category=${value}&page=0&size=${booksPerPage}`)
         } else {
             setCategorySelection('All');
             setSearchUrl(`?page=0&size=${booksPerPage}`)
